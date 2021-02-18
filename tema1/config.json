@@ -1,5 +1,6 @@
 {
     "api_keys":{
         "swapgg": "43f46bec-ce3e-49f6-a257-a559ffbceaed"
-    }
+    },
+    "enable_logging": "true"
 }

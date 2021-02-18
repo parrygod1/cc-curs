@@ -3,12 +3,17 @@ import socketserver
 import re
 import json
 import requests
+import os
+import time
 from datetime import datetime
+import metricscheck
+import pricecheck
+
 #https://stackabuse.com/serving-files-with-pythons-simplehttpserver-module/
 
+STARTTIME = time.time_ns() // 1000000
 
 class HTTPHandler(http.server.SimpleHTTPRequestHandler):
-
     def send_error(self, code, message=None):
         if code == 404:
             self.error_message_format = "Does not compute!"
@@ -20,97 +25,45 @@ class HTTPHandler(http.server.SimpleHTTPRequestHandler):
             return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
         elif re.search('/api/pricecheck/*', self.path) != None:
-            response = execute_pricecheck(self.path.split('/')[-1])
+            starttime = str(time.time_ns() // 1000000)
+            arg = self.path.split('/')[-1]
+            response = pricecheck.execute_pricecheck(arg)
             
             self.send_response(200)
-
-            self.send_header("Content-type", "text/html")
+            self.send_header("Content-type", "application/json")
             self.end_headers()
-
             self.wfile.write(bytes(str(response.body), "utf8"))
+
+            temp = dict(self.headers)
+            temp.update({'timestamp': starttime})
+            log_request(self.path, temp, response.body)
+        
+        elif re.search('/api/metrics', self.path) != None:
+            response = metricscheck.execute_metrics(STARTTIME)
+
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(bytes(str(response.body), "utf8"))
+            log_request(self.path, dict(self.headers), response.body)
 
         return
 
-class PricecheckResponse:
-    def __init__(self):
-        self.body = {
-            'timestamp': str(datetime.now()),
-            'btc_balance': 0,
-            'usd_balance': 0,
-            'price_total' : 0,
-            'item_list': {},
-            'status': ''
-        }
+def log_request(path, request, response):
+    newdict = {'path': path ,'request': request, 'response': response}
+    #newdict = {'request': 'test'}
+    data = None
 
-def send_request(url, params={}):
-    res = requests.get(url, params)
-    json_text = json.loads(res.text)
-    return json_text
-
-def get_btcaddress_data(address="18aSh4Exkx1xN2h8bZfCUQc44bF7sskzH6"):
-    data = send_request("https://chain.api.btc.com/v3/address/" + address) 
-    return data
-
-def get_btcprice():
-    data = send_request("https://api.coinlore.net/api/ticker/?id=90") #90 = btc
-    return data
-
-def get_swapggprices():
-    with open("config.json") as json_file:
-        key = json.load(json_file)["api_keys"]["swapgg"]
-        data = send_request(
-            "https://market-api.swap.gg/v1/pricing/lowest?appId=730", #730 = csgo
-            {"Authorization": key}
-            ) 
-    return data
-
-def execute_pricecheck(btc_address):
-    response = PricecheckResponse()
-
-    btc_val = 0
-    usd_val = 0
-
-    btc = get_btcaddress_data(btc_address)
-    if btc['status'] == 'success':
-        response.body['btc_balance'] = btc_val = float(btc['data']['balance']) / 100000000
-    else:
-        response.body['status'] = 'fail'
-        return response
-    
-    usd = get_btcprice()
-    if len(usd[0]) > 0:
-        response.body['usd_balance'] = usd_val = float(usd[0]['price_usd']) * btc_val
-    else:
-        response.body['status'] = 'fail'
-        return response
-    
-    item_list = get_swapggprices()
-    if not 'error' in item_list:
-        limited_itemlist = dict(sorted(item_list['result'].items(), key = lambda x : x[1]['price']))
+    with open('logs/requests.json', 'r') as outfile:
+        data = json.load(outfile)
+        data.append(newdict)
         
-        total_price = 0.
-        selected_items = {}
-        for item in limited_itemlist: 
-            if total_price + float(limited_itemlist[item]['price']) <= usd_val:
-                total_price += float(limited_itemlist[item]['price'])
-                selected_items[item] = limited_itemlist[item]
+    with open('logs/requests.json', 'w') as outfile:
+        json.dump(data, outfile)
 
-        response.body['item_list'] = selected_items
-        response.body['price_total'] = total_price
-    else:
-        response.body['status'] = 'fail'
-        return response
-
-    response.body['status'] = 'success'
-    return response
-
-
-
-
-PORT = 8000
+PORT = 80
 
 if __name__ == "__main__":
     handler_object = HTTPHandler
     my_server = socketserver.TCPServer(("", PORT), handler_object)
-
     my_server.serve_forever()
