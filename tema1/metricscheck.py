@@ -6,9 +6,10 @@ from datetime import datetime
 class PricecheckMetricsResponse:
     def __init__(self):
         self.body = {
-            'timestamp': str(datetime.now()),
+            'timestamp': str(time.time_ns() // 1000000),
             'uptime' : 0,
             'lowest_responsetime': 999999,
+            'mean_responsetime': 0,
             'highest_responsetime': 0,
             'lowest_size': 999999,
             'highest_size': 0
@@ -18,13 +19,17 @@ def execute_metrics(start_time):
     with open('logs/requests.json', 'r') as outfile:
         data = json.load(outfile)
         response = PricecheckMetricsResponse()
+        mean_response = 0
 
         for d in data:
             elapsed_time = int(d['response']['timestamp']) - int(d['request']['timestamp'])
+            mean_response += elapsed_time 
             if elapsed_time > response.body['highest_responsetime']:
                 response.body['highest_responsetime'] = elapsed_time
             if elapsed_time < response.body['lowest_responsetime']:
                 response.body['lowest_responsetime'] = elapsed_time
+
+            
 
             size = get_size(d['response'])
             if size > response.body['highest_size']:
@@ -32,7 +37,9 @@ def execute_metrics(start_time):
             if size < response.body['lowest_size']:
                 response.body['lowest_size'] = size
 
-            response.body['uptime'] = time.time_ns() // 1000000 - start_time
+        response.body['uptime'] = time.time_ns() // 1000000 - start_time
+        response.body['timestamp'] = str(time.time_ns() // 1000000)
+        response.body['mean_responsetime'] = mean_response//len(data)
 
         return response
     return None
@@ -46,8 +53,7 @@ def get_size(obj, seen=None): #returns bytes
     obj_id = id(obj)
     if obj_id in seen:
         return 0
-    # Important mark as seen *before* entering recursion to gracefully handle
-    # self-referential objects
+
     seen.add(obj_id)
     if isinstance(obj, dict):
         size += sum([get_size(v, seen) for v in obj.values()])

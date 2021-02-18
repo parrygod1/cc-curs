@@ -39,13 +39,16 @@ class HTTPHandler(http.server.SimpleHTTPRequestHandler):
             log_request(self.path, temp, response.body)
         
         elif re.search('/api/metrics', self.path) != None:
+            starttime = str(time.time_ns() // 1000000)
             response = metricscheck.execute_metrics(STARTTIME)
 
             self.send_response(200)
             self.send_header("Content-type", "application/json")
             self.end_headers()
             self.wfile.write(bytes(str(response.body), "utf8"))
-            log_request(self.path, dict(self.headers), response.body)
+            temp = dict(self.headers)
+            temp.update({'timestamp': starttime})
+            log_request(self.path, temp, response.body)
 
         return
 
