@@ -72,11 +72,15 @@ def handle_request(response):
         calc_metrics(response_list)
 
 
+print('Type number of requests:')
+num_requests = int(input())
+
 http_client = httpclient.AsyncHTTPClient()
 for url in open('tool/urls.txt'):
-    i += 1
+    if i == num_requests: break
     future = http_client.fetch(url.strip(), method='GET')
     future.add_done_callback(handle_request)
+    i += 1
 ioloop.IOLoop.instance().start()
 
 
