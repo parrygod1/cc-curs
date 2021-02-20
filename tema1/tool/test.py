@@ -16,8 +16,3 @@ res = requests.get(url)
 text = json.loads(res.text)
 print(text[0]['id'])
 
-"""
-http://meqx.go.ro/api/pricecheck/1FEgkTa7VtU6f72FsrsE24Eey6ewnRzqcF
-http://meqx.go.ro/api/pricecheck/18aSh4Exkx1xN2h8bZfCUQc44bF7sskzH6
-http://meqx.go.ro/api/pricecheck/1F9JZnnxAc7tE2FWSUVnKLRQd2XP2Xydza
-"""

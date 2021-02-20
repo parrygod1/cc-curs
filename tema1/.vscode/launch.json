@@ -10,6 +10,13 @@
             "request": "launch",
             "program": "server.py",
             "console": "integratedTerminal"
+        },
+        {
+            "name": "requesttool",
+            "type": "python",
+            "request": "launch",
+            "program": "tool/requesttool.py",
+            "console": "integratedTerminal"
         }
     ]
 }

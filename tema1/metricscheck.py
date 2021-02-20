@@ -29,8 +29,6 @@ def execute_metrics(start_time):
             if elapsed_time < response.body['lowest_responsetime']:
                 response.body['lowest_responsetime'] = elapsed_time
 
-            
-
             size = get_size(d['response'])
             if size > response.body['highest_size']:
                 response.body['highest_size'] = size
