@@ -23,6 +23,9 @@ class HTTPHandler(http.server.SimpleHTTPRequestHandler):
         if self.path == '/':
             self.path = 'client/index.html'
             return http.server.SimpleHTTPRequestHandler.do_GET(self)
+        if self.path == '/client/ajax.js':
+            self.path = 'client/ajax.js'
+            return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
         elif re.search('/api/pricecheck/*', self.path) != None:
             starttime = str(time.time_ns() // 1000000)

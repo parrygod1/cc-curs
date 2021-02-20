@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <script src='client/ajax.js'></script>
+    </head>
     <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:larger;">
-        <p>lolol</p>
+        <label for="btc_address">Enter BTC address:</label>
+        <input type="text" id="btc_address" name="btc_address" size="42">
+        <button id="submit_button">Submit</button>
+        <div id="btc_balance_val"></div><br>
+        <div id="usd_balance_val"></div><br>
+        <div id="price_total_val"></div><br>
+        <div id="content"></div>
     </body>
     
 </html>
