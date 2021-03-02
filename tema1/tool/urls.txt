@@ -6,3 +6,7 @@ http://meqx.go.ro/api/pricecheck/36GxwbHtMycat3p7ucuSjaLqnjHS7Gexfw
 http://meqx.go.ro/api/pricecheck/18aSh4Exkx1xN2h8bZfCUQc44bF7sskzH6
 http://meqx.go.ro/api/pricecheck/1LKyE1S1SfR1A4ZM4qnwTpdMoR3NAeTkwV
 http://meqx.go.ro/api/pricecheck/1CRBKayTwgWSs6z1ZnU41k2aCUKWUkkAw5
+http://meqx.go.ro/api/pricecheck/3AuShgLwJqkUFqozKZVD8BktQPoP4mLBGS
+http://meqx.go.ro/api/pricecheck/3CXDgqcUTEuMLXKAkRZx9hi39t4as6byHw
+http://meqx.go.ro/api/pricecheck/bc1q0zxeh272lzamxelrsrha53ptr3ajh3y2z7ewewykev0x52kmn6jqjlgavg
+http://meqx.go.ro/api/pricecheck/bc1q5q5hra0r677gddzv8qh35h300t3aj3dyqs6sdg
