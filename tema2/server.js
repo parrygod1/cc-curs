@@ -1,22 +1,23 @@
 require('dotenv').config()
 const http = require('http');
-const mysql = require('mysql');
-
-const dbconnection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USERNAME,
-  database: process.env.DB_NAME
-});
-dbconnection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to database');
-});
+const utilities = require('./utilities.js');
 
 const host = 'localhost';
 const port = 8080;
 
+const routes = {
+  "/api/categories" : require('./categories-request.js'),
+  "/api/products": require('./products-request.js')
+}
+
 const requestListener = function (request, response) {
-  if(request.method == 'POST')
+  route = routes[request.url];
+  if (route) route(request, response);
+  else {
+    utilities.sendResponse(response, 'Not Found', 404);
+  }
+
+  /* if(request.method == 'POST')
   {
     const chunks = [];
     request.on('data', chunk => chunks.push(chunk));
@@ -31,7 +32,7 @@ const requestListener = function (request, response) {
     if(err) throw err;
     console.log(rows[0]);
   })
-  response.end('Hello, World!');
+  response.end('Hello, World!'); */
 }
 
 const server = http.createServer(requestListener);

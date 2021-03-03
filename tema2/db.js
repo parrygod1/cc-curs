@@ -1,12 +1,12 @@
-require('dotenv').config()
+require('dotenv').config();
 const mysql = require('mysql');
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'cctema'
+
+module.exports = dbconnection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USERNAME,
+  database: process.env.DB_NAME
 });
-connection.connect((err) => {
+dbconnection.connect((err) => {
   if (err) throw err;
-  console.log('Connected!');
+  console.log('Connected to database');
 });
