@@ -50,3 +50,8 @@ exports.existsResponseJSON = {
   "status" : "Resource already exists",
   "code" : 409
 }
+
+exports.notAllowedResponseJSON = {
+  "status" : "Method not allowed",
+  "code" : 405
+}

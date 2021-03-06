@@ -43,6 +43,43 @@
 			"response": []
 		},
 		{
+			"name": "/products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/products",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/products/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/products/1",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/categories",
 			"event": [
 				{
@@ -60,7 +97,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"test\"\r\n}",
+					"raw": "{\r\n    \"category_name\": \"test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -68,51 +105,13 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/api/categories/",
+					"raw": "{{host}}/api/categories",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
-						"categories",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/products",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/products",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/products/1",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{host}}/api/products/1",
-					"host": [
-						"{{host}}"
-					],
-					"path": [
-						"api",
-						"products",
-						"1"
+						"categories"
 					]
 				}
 			},
@@ -123,6 +122,10 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "{{host}}/api/products",
 					"host": [
@@ -156,19 +159,23 @@
 			"response": []
 		},
 		{
-			"name": "/categories/1",
+			"name": "/categories/3",
 			"request": {
 				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"category_name\": \"put request test\"\r\n}"
+				},
 				"url": {
-					"raw": "{{host}}/api/categories/1",
+					"raw": "{{host}}/api/categories/3",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"categories",
-						"1"
+						"3"
 					]
 				}
 			},
@@ -198,15 +205,19 @@
 			"request": {
 				"method": "PATCH",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"category_name\": \"put request test\"\r\n}"
+				},
 				"url": {
-					"raw": "{{host}}/api/categories/1",
+					"raw": "{{host}}/api/categories/3",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"categories",
-						"1"
+						"3"
 					]
 				}
 			},
@@ -236,15 +247,36 @@
 			"request": {
 				"method": "DELETE",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
-					"raw": "{{host}}/api/categories/1",
+					"raw": "{{host}}/api/categories/3",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
 						"api",
 						"categories",
-						"1"
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{host}}/fail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/fail",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"fail"
 					]
 				}
 			},
