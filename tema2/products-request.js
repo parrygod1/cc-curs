@@ -1,8 +1,6 @@
 const dbconnection = require('./db.js')
 const utilities = require('./utilities.js');
 
-var putfunc;
-
 var actions = {
   'GET': function(request, response) {
     var requestPath = utilities.getRequestPathAPI(request.url);
@@ -71,7 +69,7 @@ var actions = {
     else
       utilities.sendResponse(response, utilities.errorResponseJSON, 404);
   },
-  'PUT': putfunc = function(request, response){
+  'PUT': function(request, response){
     var requestPath = utilities.getRequestPathAPI(request.url);
     if (requestPath.length == 2){
       const chunks = [];
@@ -110,7 +108,44 @@ var actions = {
     else
       utilities.sendResponse(response, utilities.notAllowedResponseJSON, 405);
   },
-  'PATCH': putfunc,
+  'PATCH': function(request, response){
+    var requestPath = utilities.getRequestPathAPI(request.url);
+    if (requestPath.length == 2){
+      const chunks = [];
+      request.on('data', chunk => chunks.push(chunk));
+      request.on('end', () => {
+        const data = JSON.parse(Buffer.concat(chunks));
+        console.log('Data: ', data);
+        
+        query = 'SELECT * FROM products WHERE ID = ?';
+        values = [`${requestPath[1]}`];
+        dbconnection.query(query, values, (err, rows) => {
+          if (!err && rows.length > 0) {
+            str = "";
+            for(key in data){
+              str += ` ${key} = '${data[key]}' `
+            }
+
+            query = 'UPDATE products SET' + str + 'WHERE ID = ?';
+            values = [`${requestPath[1]}`];
+
+            dbconnection.query(query, values, (err, rows) => {
+              if (!err)
+                utilities.sendResponse(response, '', 200);
+              else
+                utilities.sendResponse(response, utilities.errorResponseJSON, 404);
+            });
+          } 
+          else
+            utilities.sendResponse(response, utilities.errorResponseJSON, 404);
+        });
+        
+
+      });
+    }
+    else
+      utilities.sendResponse(response, utilities.notAllowedResponseJSON, 405);
+  },
   'DELETE': function(request, response){
     var requestPath = utilities.getRequestPathAPI(request.url);
     if (requestPath.length == 2) {

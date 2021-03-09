@@ -192,7 +192,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\" : \"changed name using PATCH from postman\",\r\n    \"description\": \"changed description\",\r\n    \"price\": 0,\r\n    \"category_id\": 2\r\n}"
+					"raw": "{\r\n    \"name\": \"patch test\"\r\n}"
 				},
 				"url": {
 					"raw": "{{host}}/api/products/4",
