@@ -15,7 +15,7 @@ var actions = {
       }
       else if(requestPath.length == 2){
         id = requestPath[1];
-        query = 'SELECT * FROM categories WHERE ID = ?';
+        query = 'SELECT * FROM products WHERE CATEGORY_ID = ?';
         values = [id];
         dbconnection.query(query, values, (err, rows) => {
           if(!err && rows.length > 0)
