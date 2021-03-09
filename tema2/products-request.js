@@ -57,7 +57,7 @@ var actions = {
                 }
               });
             }
-            else //maybe delete this
+            else
               utilities.sendResponse(response, utilities.existsResponseJSON, 409);
           }
         });

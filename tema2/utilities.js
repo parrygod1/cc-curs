@@ -47,7 +47,7 @@ exports.errorResponseJSON = {
 }
 
 exports.existsResponseJSON = {
-  "status" : "Resource already exists",
+  "status" : "Conflict",
   "code" : 409
 }
 
