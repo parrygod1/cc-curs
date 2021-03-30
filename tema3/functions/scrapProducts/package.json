@@ -1,0 +1,15 @@
+{
+  "name": "scrap-products",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+    "start": "functions-framework --target=scrapProducts --signature-type=http --reload"
+  },
+  "devDependencies": {
+    "@google-cloud/functions-framework": "^1.7.1"
+  },
+  "dependencies": {
+    "jsdom": "^16.5.1",
+    "puppeteer": "^8.0.0"
+  }
+}

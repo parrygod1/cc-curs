@@ -1,0 +1,16 @@
+steps:
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['install']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - scrapProducts
+      - --region=europe-west1
+      - --source=https://source.developers.google.com/projects/disco-dispatch-307814/repos/cctema3/moveable-aliases/master/paths/scrapProducts
+      - --trigger-http
+      - --entry-point=scrapProducts
+      - --runtime=nodejs14
+      - --allow-unauthenticated
