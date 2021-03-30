@@ -1,0 +1,16 @@
+steps:
+  - name: 'node'
+    entrypoint: 'npm'
+    args: ['install']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - getDirections
+      - --region=europe-west2
+      - --source=.
+      - --trigger-http
+      - --entry-point=getDirections
+      - --runtime=nodejs14
+      - --allow-unauthenticated

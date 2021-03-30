@@ -37,7 +37,7 @@ var actions = {
             utilities.sendResponse(response, utilities.errorResponseJSON, 404);
             return;
           }
-      
+
           query = 'SELECT * FROM categories WHERE CATEGORY_NAME like ?';
           values = [`%${data['category_name']}%`];
           dbconnection.query(query, values, (err, rows) => {
