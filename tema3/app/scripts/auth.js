@@ -1,6 +1,6 @@
 // listen for auth status changes
 var config = {
-  apiKey: "AIzaSyBrXzUGMbFTOExsHW2c3j2yAHojkx84cwY",
+  apiKey: "",
   authDomain: "disco-dispatch-307814.firebaseapp.com",
   databaseURL: "https://disco-dispatch-307814-default-rtdb.europe-west1.firebasedatabase.app/",
   projectId: "disco-dispatch-307814"
