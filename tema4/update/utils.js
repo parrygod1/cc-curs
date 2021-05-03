@@ -25,7 +25,7 @@ const Product = mongoose.model(
 
 const { BlobServiceClient } = require('@azure/storage-blob');
 process.env.BLOB_KEY =
-  'DefaultEndpointsProtocol=https;AccountName=csb100320012fbbddb4;AccountKey=GtgbtE5akInTs7xtyqiIAurY35kgrIK2X4Pq/lvo430JRWoi/zqaJGizdNJFPUfecG01mfBNc05FVqOgr/2qsg==;EndpointSuffix=core.windows.net';
+  'DefaultEndpointsProtocol=https;AccountName=csb100320012fbbddb4;AccountKey=;EndpointSuffix=core.windows.net';
 const blobServiceClient = BlobServiceClient.fromConnectionString(
   process.env.BLOB_KEY
 );

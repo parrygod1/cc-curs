@@ -9,7 +9,7 @@ module.exports = async function (context, req) {
     //await delContainer();
       
     for(let store of ['lidl', 'profi', 'kaufland']) {
-        const response = await fetch(`https://scrap1234.azurewebsites.net/api/scrap123?code=g5rfiNDFycI4nizYVvKw5TCEqynTJzFqvHjsaGmz53Puu5fn4N8zPg==&store=${store}`);
+        const response = await fetch(`https://scrap1234.azurewebsites.net/api/scrap123?code=&store=${store}`);
         const prod = await response.json();
         await insertProd(prod, store);
     }
