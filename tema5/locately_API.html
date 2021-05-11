@@ -1,0 +1,813 @@
+<!doctype html>
+<html>
+  <head>
+    <title>locate.ly API</title>
+    <style type="text/css">
+      body {
+	font-family: Trebuchet MS, sans-serif;
+	font-size: 15px;
+	color: #444;
+	margin-right: 24px;
+}
+
+h1	{
+	font-size: 25px;
+}
+h2	{
+	font-size: 20px;
+}
+h3	{
+	font-size: 16px;
+	font-weight: bold;
+}
+hr	{
+	height: 1px;
+	border: 0;
+	color: #ddd;
+	background-color: #ddd;
+}
+
+.app-desc {
+  clear: both;
+  margin-left: 20px;
+}
+.param-name {
+  width: 100%;
+}
+.license-info {
+  margin-left: 20px;
+}
+
+.license-url {
+  margin-left: 20px;
+}
+
+.model {
+  margin: 0 0 0px 20px;
+}
+
+.method {
+  margin-left: 20px;
+}
+
+.method-notes	{
+	margin: 10px 0 20px 0;
+	font-size: 90%;
+	color: #555;
+}
+
+pre {
+  padding: 10px;
+  margin-bottom: 2px;
+}
+
+.http-method {
+ text-transform: uppercase;
+}
+
+pre.get {
+  background-color: #0f6ab4;
+}
+
+pre.post {
+  background-color: #10a54a;
+}
+
+pre.put {
+  background-color: #c5862b;
+}
+
+pre.delete {
+  background-color: #a41e22;
+}
+
+.huge	{
+	color: #fff;
+}
+
+pre.example {
+  background-color: #f3f3f3;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+code {
+  white-space: pre;
+}
+
+.nickname {
+  font-weight: bold;
+}
+
+.method-path {
+  font-size: 1.5em;
+  background-color: #0f6ab4;
+}
+
+.up {
+  float:right;
+}
+
+.parameter {
+  width: 500px;
+}
+
+.param {
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-weight: bold;
+}
+
+.param-desc {
+  width: 700px;
+  padding: 0 0 0 20px;
+  color: #777;
+}
+
+.param-type {
+  font-style: italic;
+}
+
+.param-enum-header {
+width: 700px;
+padding: 0 0 0 60px;
+color: #777;
+font-weight: bold;
+}
+
+.param-enum {
+width: 700px;
+padding: 0 0 0 80px;
+color: #777;
+font-style: italic;
+}
+
+.field-label {
+  padding: 0;
+  margin: 0;
+  clear: both;
+}
+
+.field-items	{
+	padding: 0 0 15px 0;
+	margin-bottom: 15px;
+}
+
+.return-type {
+  clear: both;
+  padding-bottom: 10px;
+}
+
+.param-header {
+  font-weight: bold;
+}
+
+.method-tags {
+  text-align: right;
+}
+
+.method-tag {
+  background: none repeat scroll 0% 0% #24A600;
+  border-radius: 3px;
+  padding: 2px 10px;
+  margin: 2px;
+  color: #FFF;
+  display: inline-block;
+  text-decoration: none;
+}
+
+    </style>
+  </head>
+  <body>
+  <h1>locate.ly API</h1>
+    <div class="app-desc">API for finding the shortest route to a store that has the product the user wishes to purchase</div>
+    <div class="app-desc">More information: <a href="https://helloreverb.com">https://helloreverb.com</a></div>
+    <div class="app-desc">Contact Info: <a href="you@your-company.com">you@your-company.com</a></div>
+    <div class="app-desc">Version: 1.0.0</div>
+    <div class="app-desc">BasePath:/i4791/locate.ly/1.0.0</div>
+    <div class="license-info">Apache 2.0</div>
+    <div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
+  <h2>Access</h2>
+
+  <h2><a name="__Methods">Methods</a></h2>
+  [ Jump to <a href="#__Models">Models</a> ]
+
+  <h3>Table of Contents </h3>
+  <div class="method-summary"></div>
+  <h4><a href="#Products">Products</a></h4>
+  <ul>
+  <li><a href="#getAllProducts"><code><span class="http-method">get</span> /products</code></a></li>
+  <li><a href="#getDirection2Store"><code><span class="http-method">get</span> /products/{prodid}/directions</code></a></li>
+  <li><a href="#getProdid"><code><span class="http-method">get</span> /products/{prodid}</code></a></li>
+  <li><a href="#scrProd"><code><span class="http-method">get</span> /products/scrape</code></a></li>
+  <li><a href="#updateAllProducts"><code><span class="http-method">put</span> /products</code></a></li>
+  </ul>
+  <h4><a href="#Users">Users</a></h4>
+  <ul>
+  <li><a href="#favProd"><code><span class="http-method">get</span> /users/favorites/{userid}</code></a></li>
+  <li><a href="#favProdAdd"><code><span class="http-method">post</span> /users/favorites/{userid}/{productid}</code></a></li>
+  <li><a href="#favProdCheck"><code><span class="http-method">get</span> /users/favorites/{userid}/{productid}</code></a></li>
+  <li><a href="#favProdDel"><code><span class="http-method">delete</span> /users/favorites/{userid}/{productid}</code></a></li>
+  <li><a href="#premiumUser"><code><span class="http-method">post</span> /users/premuim/{userid}</code></a></li>
+  </ul>
+
+  <h1><a name="Products">Products</a></h1>
+  <div class="method"><a name="getAllProducts"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products</code></pre></div>
+    <div class="method-summary">Retrieves all products from the database (<span class="nickname">getAllProducts</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">search (optional)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; the product's name </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Product">Product</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+}, {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+} ]</code></pre>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/xml</div>
+    <pre class="example"><code><Product>
+  <Id>123456789</Id>
+  <Price>1.3579</Price>
+  <Name>sushi</Name>
+  <Store>aeiou</Store>
+  <ImageLink>https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg</ImageLink>
+  <Description>aeiou</Description>
+</Product></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getDirection2Store"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/{prodid}/directions</code></pre></div>
+    <div class="method-summary">Shows the shortest route to the specified store (<span class="nickname">getDirection2Store</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">prodid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash;  format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">origin_loc (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; coordinates(lat,long) </div><div class="param">radius (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash;  format: float</div><div class="param">destinations (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; store name </div>
+    </div>  <!-- field-items -->
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="getProdid"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/{prodid}</code></pre></div>
+    <div class="method-summary">Retrieves the product with the specified id (<span class="nickname">getProdid</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">prodid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the product's id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Product">Product</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+}, {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+} ]</code></pre>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/xml</div>
+    <pre class="example"><code><Product>
+  <Id>123456789</Id>
+  <Price>1.3579</Price>
+  <Name>sushi</Name>
+  <Store>aeiou</Store>
+  <ImageLink>https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg</ImageLink>
+  <Description>aeiou</Description>
+</Product></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="scrProd"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /products/scrape</code></pre></div>
+    <div class="method-summary">Extracts product offers from a specified store (<span class="nickname">scrProd</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+      <div class="param">store (required)</div>
+
+      <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; store name </div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Product">Product</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+}, {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+} ]</code></pre>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/xml</div>
+    <pre class="example"><code><Product>
+  <Id>123456789</Id>
+  <Price>1.3579</Price>
+  <Name>sushi</Name>
+  <Store>aeiou</Store>
+  <ImageLink>https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg</ImageLink>
+  <Description>aeiou</Description>
+</Product></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="updateAllProducts"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="put"><code class="huge"><span class="http-method">put</span> /products</code></pre></div>
+    <div class="method-summary">Inserts products obtained through scraping into the database (<span class="nickname">updateAllProducts</span>)</div>
+    <div class="method-notes"></div>
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <h1><a name="Users">Users</a></h1>
+  <div class="method"><a name="favProd"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/favorites/{userid}</code></pre></div>
+    <div class="method-summary">Lists the favorite products for a specified user (<span class="nickname">favProd</span>)</div>
+    <div class="method-notes">Lists the favorite products for a specified user</div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the user's id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      array[<a href="#Product">Product</a>]
+      
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>[ {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+}, {
+  "ImageLink" : "https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg",
+  "Description" : "Description",
+  "Price" : 6.0274563,
+  "Store" : "lidl",
+  "Id" : 0,
+  "Name" : "sushi"
+} ]</code></pre>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/xml</div>
+    <pre class="example"><code><Product>
+  <Id>123456789</Id>
+  <Price>1.3579</Price>
+  <Name>sushi</Name>
+  <Store>aeiou</Store>
+  <ImageLink>https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg</ImageLink>
+  <Description>aeiou</Description>
+</Product></code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favProdAdd"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /users/favorites/{userid}/{productid}</code></pre></div>
+    <div class="method-summary">Adds a product to the favorite products list for  a specified user (<span class="nickname">favProdAdd</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the user's id format: int64</div><div class="param">productid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the product's id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    successful operation
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favProdCheck"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="get"><code class="huge"><span class="http-method">get</span> /users/favorites/{userid}/{productid}</code></pre></div>
+    <div class="method-summary">Shows whether a product is favored by the user (<span class="nickname">favProdCheck</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the user's id format: int64</div><div class="param">productid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the product's id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+      
+      Boolean
+    </div>
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/json</div>
+    <pre class="example"><code>true</code></pre>
+    <h3 class="field-label">Example data</h3>
+    <div class="example-data-content-type">Content-Type: application/xml</div>
+    <pre class="example"><code>true</code></pre>
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#Boolean">Boolean</a>
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="favProdDel"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/favorites/{userid}/{productid}</code></pre></div>
+    <div class="method-summary">Deletes a product from the favorite products list for  a specified user (<span class="nickname">favProdDel</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the user's id format: int64</div><div class="param">productid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the product's id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">200</h4>
+    successful operation
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+  <div class="method"><a name="premiumUser"/>
+    <div class="method-path">
+    <a class="up" href="#__Methods">Up</a>
+    <pre class="post"><code class="huge"><span class="http-method">post</span> /users/premuim/{userid}</code></pre></div>
+    <div class="method-summary">Upgrades a normal account to premium (<span class="nickname">premiumUser</span>)</div>
+    <div class="method-notes"></div>
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+      <div class="param">userid (required)</div>
+
+      <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; the user's id format: int64</div>
+    </div>  <!-- field-items -->
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+      <div class="param">credentials <a href="#string">string</a> (required)</div>
+
+      <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; the user's credentials </div>
+
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="header">Content-Type</span> response header.
+    <ul>
+      <li><code>application/json</code></li>
+      <li><code>application/xml</code></li>
+    </ul>
+
+    <h3 class="field-label">Responses</h3>
+    <h4 class="field-label">201</h4>
+    successful operation
+        <a href="#"></a>
+    <h4 class="field-label">400</h4>
+    Invalid status value
+        <a href="#"></a>
+  </div> <!-- method -->
+  <hr/>
+
+  <h2><a name="__Models">Models</a></h2>
+  [ Jump to <a href="#__Methods">Methods</a> ]
+
+  <h3>Table of Contents</h3>
+  <ol>
+    <li><a href="#Product"><code>Product</code> - </a></li>
+    <li><a href="#User"><code>User</code> - </a></li>
+  </ol>
+
+  <div class="model">
+    <h3><a name="Product"><code>Product</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">Id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">Price (optional)</div><div class="param-desc"><span class="param-type"><a href="#float">Float</a></span>  format: float</div>
+<div class="param">Name (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+          <div class="param-desc"><span class="param-type">example: sushi</span></div>
+<div class="param">Store (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+        <div class="param-enum-header">Enum:</div>
+        <div class="param-enum">lidl</div><div class="param-enum">profi</div><div class="param-enum">kaufland</div>
+<div class="param">ImageLink (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  format: url</div>
+          <div class="param-desc"><span class="param-type">example: https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg</span></div>
+<div class="param">Description (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+    </div>  <!-- field-items -->
+  </div>
+  <div class="model">
+    <h3><a name="User"><code>User</code> - </a> <a class="up" href="#__Models">Up</a></h3>
+    <div class='model-description'></div>
+    <div class="field-items">
+      <div class="param">id (optional)</div><div class="param-desc"><span class="param-type"><a href="#long">Long</a></span>  format: int64</div>
+<div class="param">username (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">firstName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">lastName (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">email (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">password (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">phone (optional)</div><div class="param-desc"><span class="param-type"><a href="#string">String</a></span>  </div>
+<div class="param">userStatus (optional)</div><div class="param-desc"><span class="param-type"><a href="#integer">Integer</a></span> User Status format: int32</div>
+    </div>  <!-- field-items -->
+  </div>
+  </body>
+</html>
