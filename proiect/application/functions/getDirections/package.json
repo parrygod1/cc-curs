@@ -1,0 +1,8 @@
+{
+    "name": "sample-http",
+    "version": "0.0.1",
+    "requires": true,
+    "dependencies": {
+      "node-fetch": "^2.6.0"
+    }
+}

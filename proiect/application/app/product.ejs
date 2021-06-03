@@ -1,0 +1,41 @@
+<%- include('./partials/header'); %> <%- include('./partials/navbar'); %>
+<div class="product-info">
+  <div class="container" style="margin-top: 30px">
+    <div class="row">
+      <div class="col s6">
+        <img
+          class="materialboxed product-image z-depth-3"
+          style="width: 100%"
+          src="images/sample-1.jpg"
+        />
+      </div>
+      <div class="col s6">
+        <h3 class="product-title"></h3>
+        <p class="product-description"></p>
+        <hr />
+        <div
+          class="card-panel"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <div style="font-size: 1.4em" class="product-price"></div>
+          <div class="product-store"></div>
+          <div
+            class="product-favorites-button"
+            style="transition: 0.5s all; opacity: 0"
+          >
+            <a class="waves-effect waves-light btn-floating"
+              ><i onclick="clickFavoriteButton()" class="material-icons left"
+                >favorite</i
+              ></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('./partials/footer'); %>

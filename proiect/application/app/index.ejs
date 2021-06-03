@@ -1,0 +1,35 @@
+<%- include('./partials/header'); %> <%- include('./partials/navbar'); %>
+<div id="product-lists">
+  <div class="container" style="padding: 20px 10px">
+    <div class="centered"><img src="./assets/logo.png" alt="" /></div>
+    <input placeholder="Search products..." id="search-products" type="text" />
+    <ul id="all-products-list"></ul>
+  </div>
+
+  <ul id="current-products-list" class="collection">
+    <div class="current-list-header">
+      <div class="collection-header">
+        <h5>Current list</h5>
+      </div>
+      <div class="input-field inline input-list-name">
+        <input value="MyList" id="list-name" type="text" class="validate" />
+        <label for="email_inline">Enter list name</label>
+      </div>
+      <a
+        onclick="saveList()"
+        class="waves-effect waves-light btn"
+        style="margin-left: 15"
+        >Save</a
+      >
+      <a
+        onclick="getDirectionsClick()"
+        class="waves-effect waves-light btn"
+        style="margin-left: 15"
+        >Get Directions</a
+      >
+    </div>
+  </ul>
+</div>
+
+<div id="iframe-container"></div>
+<%- include('./partials/footer'); %>

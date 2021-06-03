@@ -1,0 +1,135 @@
+.product-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.product-card-data {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  justify-content: space-between;
+  flex-basis: 100%;
+}
+
+.product-card-name {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.product-card-price {
+  font-size: 25px;
+  font-weight: 600;
+  color: #26a69a; /*darkorange;*/
+}
+
+.product-card-stores {
+  font-size: initial;
+  color: grey;
+}
+
+.product-card-description {
+  font-size: 20px;
+}
+
+.product-img {
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+}
+
+.product-button {
+  width: 100px;
+  align-self: center;
+}
+
+#username-display {
+  color: black;
+}
+
+#iframe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#all-products-list {
+  /*margin-left: 420px;
+    margin-right: 420px;*/
+  min-width: 900px;
+}
+
+#current-products-list {
+  display: none;
+}
+
+#product-lists {
+  display: flex;
+  justify-content: center;
+}
+.all-products-list__template-hidden {
+  display: none;
+}
+
+.list-template-hidden {
+  display: none;
+}
+
+.all-products-list__card {
+  overflow: hidden;
+}
+.all-products-list__card p.store {
+  color: gray;
+}
+.all-products-list__card__action-button {
+  bottom: 70px !important;
+}
+.all-products-list__card:hover .all-products-list__card__image {
+  transform: scale(1.05);
+}
+.all-products-list__card__image {
+  width: 86% !important;
+  transition: 0.3s;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.all-products-list__card__image img {
+  margin-top: 20px;
+}
+.all-products-list__card__price {
+  font-size: 110%;
+}
+.all-products-list__card.horizontal img {
+  height: auto !important;
+  width: 80%;
+  margin: 0 !important;
+}
+.card.large.horizontal {
+  height: 360px;
+}
+#search-products {
+  margin: 40px 0;
+}
+.all-products-list__card .card_action {
+  display: flex;
+  justify-content: space-between;
+}
+.all-products-list__card .card-content a {
+  color: inherit;
+}
+#current-products-list {
+  padding: 10px !important;
+}
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#title-container { 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
