@@ -1,0 +1,339 @@
+---
+swagger: "2.0"
+info:
+  description: API for finding the shortest route to a store that has the product the user wishes to purchase
+  version: 1.0.0
+  title: locate.ly API
+  contact:
+    email: you@your-company.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /i4791/locate.ly/1.0.0
+tags:
+- name: products
+  description: Operations on products
+- name: users
+  description: Operations on users
+schemes:
+- https
+paths:
+  /products:
+    get:
+      tags:
+      - products
+      summary: Retrieves all products from the database
+      operationId: getAllProducts
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: search
+        in: query
+        description: the product's name
+        required: false
+        type: string
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        "400":
+          description: Invalid status value
+    put:
+      tags:
+      - products
+      summary: Inserts products obtained through scraping into the database
+      operationId: updateAllProducts
+      produces:
+      - application/json
+      - application/xml
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid status value
+  /products/{prodid}:
+    get:
+      tags:
+      - products
+      summary: Retrieves the product with the specified id
+      operationId: getProdid
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: prodid
+        in: path
+        description: the product's id
+        required: true
+        type: integer
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        "400":
+          description: Invalid status value
+  /products/scrape:
+    get:
+      tags:
+      - products
+      summary: Extracts product offers from a specified store
+      operationId: scrProd
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: store
+        in: query
+        description: store name
+        required: true
+        type: string
+        enum:
+        - lidl
+        - profi
+        - kaufland
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        "400":
+          description: Invalid status value
+  /products/{prodid}/directions:
+    get:
+      tags:
+      - products
+      summary: Shows the shortest route to the specified store
+      operationId: getDirection2Store
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: prodid
+        in: path
+        required: true
+        type: integer
+        format: int64
+      - name: origin_loc
+        in: query
+        description: coordinates(lat,long)
+        required: true
+        type: string
+      - name: radius
+        in: query
+        required: true
+        type: number
+        format: float
+      - name: destinations
+        in: query
+        description: store name
+        required: true
+        type: string
+        enum:
+        - lidl
+        - profi
+        - kaufland
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid status value
+  /users/favorites/{userid}:
+    get:
+      tags:
+      - users
+      summary: Lists the favorite products for a specified user
+      description: Lists the favorite products for a specified user
+      operationId: favProd
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: userid
+        in: path
+        description: the user's id
+        required: true
+        type: number
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        "400":
+          description: Invalid status value
+  /users/favorites/{userid}/{productid}:
+    get:
+      tags:
+      - users
+      summary: Shows whether a product is favored by the user
+      operationId: favProdCheck
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: userid
+        in: path
+        description: the user's id
+        required: true
+        type: number
+        format: int64
+      - name: productid
+        in: path
+        description: the product's id
+        required: true
+        type: number
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: boolean
+        "400":
+          description: Invalid status value
+    post:
+      tags:
+      - users
+      summary: Adds a product to the favorite products list for  a specified user
+      operationId: favProdAdd
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: userid
+        in: path
+        description: the user's id
+        required: true
+        type: number
+        format: int64
+      - name: productid
+        in: path
+        description: the product's id
+        required: true
+        type: number
+        format: int64
+      responses:
+        "201":
+          description: successful operation
+        "400":
+          description: Invalid status value
+    delete:
+      tags:
+      - users
+      summary: Deletes a product from the favorite products list for  a specified user
+      operationId: favProdDel
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: userid
+        in: path
+        description: the user's id
+        required: true
+        type: number
+        format: int64
+      - name: productid
+        in: path
+        description: the product's id
+        required: true
+        type: number
+        format: int64
+      responses:
+        "200":
+          description: successful operation
+        "400":
+          description: Invalid status value
+  /users/premuim/{userid}:
+    post:
+      tags:
+      - users
+      summary: Upgrades a normal account to premium
+      operationId: premiumUser
+      produces:
+      - application/json
+      - application/xml
+      parameters:
+      - name: userid
+        in: path
+        description: the user's id
+        required: true
+        type: number
+        format: int64
+      - in: body
+        name: credentials
+        description: the user's credentials
+        required: true
+        schema:
+          type: string
+      responses:
+        "201":
+          description: successful operation
+        "400":
+          description: Invalid status value
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      phone:
+        type: string
+      userStatus:
+        type: integer
+        format: int32
+        description: User Status
+    xml:
+      name: User
+  Product:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int64
+      Price:
+        type: number
+        format: float
+      Name:
+        type: string
+        example: sushi
+      Store:
+        type: string
+        enum:
+        - lidl
+        - profi
+        - kaufland
+      ImageLink:
+        type: string
+        format: url
+        example: https://ro.cat-ret.assets.lidl/catalog4media/ro/article/12347/xs/12347.jpg
+      Description:
+        type: string
+    xml:
+      name: Product
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
