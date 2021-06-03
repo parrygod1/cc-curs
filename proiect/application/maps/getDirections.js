@@ -6,7 +6,7 @@
 * 
 */
 const fetch = require('node-fetch');
-const api_key = 'AIzaSyBrXzUGMbFTOExsHW2c3j2yAHojkx84cwY';
+const api_key = 
 const badRequest = {
     'message' : 'Bad request, invalid parameters'
 }
